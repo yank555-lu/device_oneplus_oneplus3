@@ -41,8 +41,9 @@ import com.slim.device.settings.ScreenOffGesture;
 
 import com.android.internal.os.DeviceKeyHandler;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.gzosp.ActionConstants;
-import com.android.internal.util.gzosp.Action;
+
+import com.asylum.action.Action;
+import com.asylum.action.ActionConstants;
 
 public class KeyHandler implements DeviceKeyHandler {
 
@@ -216,14 +217,14 @@ public class KeyHandler implements DeviceKeyHandler {
                 Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
     }
 
-    public KeyEvent handleKeyEvent(KeyEvent event) {
+    public boolean handleKeyEvent(KeyEvent event) {
         int scanCode = event.getScanCode();
         boolean isKeySupported = ArrayUtils.contains(sSupportedGestures, scanCode);
         if (!isKeySupported) {
-            return event;
+            return false;
         }
         if (event.getAction() != KeyEvent.ACTION_UP) {
-            return null;
+            return true;
         }
         if (isKeySupported && !mEventHandler.hasMessages(GESTURE_REQUEST)) {
             Message msg = getMessageForKeyEvent(event);
@@ -234,7 +235,7 @@ public class KeyHandler implements DeviceKeyHandler {
                 mEventHandler.sendMessage(msg);
             }
         }
-        return null;
+        return true;
     }
 
     private Message getMessageForKeyEvent(KeyEvent keyEvent) {

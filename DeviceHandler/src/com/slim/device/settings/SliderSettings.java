@@ -23,9 +23,9 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.SwitchPreference;
 
+import com.asylum.utils.FileUtils;
 import com.slim.device.KernelControl;
 import com.slim.device.R;
-import com.slim.device.util.FileUtils;
 
 public class SliderSettings extends PreferenceActivity
         implements OnPreferenceChangeListener {

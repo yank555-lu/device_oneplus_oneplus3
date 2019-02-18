@@ -24,10 +24,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
+import com.asylum.utils.FileUtils;
 import com.slim.device.KernelControl;
 import com.slim.device.settings.ScreenOffGesture;
 import com.slim.device.settings.SliderSettings;
-import com.slim.device.util.FileUtils;
 
 import java.io.File;
 

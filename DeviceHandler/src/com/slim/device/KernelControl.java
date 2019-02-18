@@ -16,7 +16,7 @@
 
 package com.slim.device;
 
-import com.slim.device.util.FileUtils;
+import com.asylum.utils.FileUtils;
 
 import java.io.File;
 

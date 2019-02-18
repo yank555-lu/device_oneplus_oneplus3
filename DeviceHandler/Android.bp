@@ -1,0 +1,12 @@
+android_app {
+    name: "DeviceHandler",
+    certificate: "platform",
+    optimize: {
+        enabled: false,
+    },
+    dex_preopt: {
+        enabled: false,
+    },
+    srcs: [ "src/**/*.java" ],
+    static_libs: [ "com.asylum.core", "com.asylum.actions", "com.asylum.utils" ],
+}
