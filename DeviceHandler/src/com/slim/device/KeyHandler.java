@@ -57,13 +57,7 @@ public class KeyHandler implements DeviceKeyHandler {
     private static final int GESTURE_LTR_SCANCODE = 253;
     private static final int GESTURE_GTR_SCANCODE = 254;
     private static final int GESTURE_V_UP_SCANCODE = 255;
-    // Slider
-    private static final int MODE_TOTAL_SILENCE = 600;
-    private static final int MODE_ALARMS_ONLY = 601;
-    private static final int MODE_PRIORITY_ONLY = 602;
-    private static final int MODE_NONE = 603;
-    private static final int MODE_VIBRATE = 604;
-    private static final int MODE_RING = 605;
+    private static final int MAX_KEYCODE = 256;
 
     private static final int[] sSupportedGestures = new int[]{
         GESTURE_CIRCLE_SCANCODE,
@@ -72,12 +66,6 @@ public class KeyHandler implements DeviceKeyHandler {
         GESTURE_V_UP_SCANCODE,
         GESTURE_LTR_SCANCODE,
         GESTURE_GTR_SCANCODE,
-        MODE_TOTAL_SILENCE,
-        MODE_ALARMS_ONLY,
-        MODE_PRIORITY_ONLY,
-        MODE_NONE,
-        MODE_VIBRATE,
-        MODE_RING
     };
 
     private final Context mContext;
@@ -157,26 +145,6 @@ public class KeyHandler implements DeviceKeyHandler {
                         ActionConstants.ACTION_MEDIA_NEXT);
                         doHapticFeedback();
                 break;
-            case MODE_TOTAL_SILENCE:
-                setZenMode(Settings.Global.ZEN_MODE_NO_INTERRUPTIONS);
-                break;
-            case MODE_ALARMS_ONLY:
-                setZenMode(Settings.Global.ZEN_MODE_ALARMS);
-                break;
-            case MODE_PRIORITY_ONLY:
-                setZenMode(Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS);
-                setRingerModeInternal(AudioManager.RINGER_MODE_NORMAL);
-                break;
-            case MODE_NONE:
-                setZenMode(Settings.Global.ZEN_MODE_OFF);
-                setRingerModeInternal(AudioManager.RINGER_MODE_NORMAL);
-                break;
-            case MODE_VIBRATE:
-                setRingerModeInternal(AudioManager.RINGER_MODE_VIBRATE);
-                break;
-            case MODE_RING:
-                setRingerModeInternal(AudioManager.RINGER_MODE_NORMAL);
-                break;
             }
 
             if (action == null || action != null && action.equals(ActionConstants.ACTION_NULL)) {
@@ -228,7 +196,7 @@ public class KeyHandler implements DeviceKeyHandler {
         }
         if (isKeySupported && !mEventHandler.hasMessages(GESTURE_REQUEST)) {
             Message msg = getMessageForKeyEvent(event);
-            if (scanCode < MODE_TOTAL_SILENCE && mProximitySensor != null) {
+            if (scanCode < MAX_KEYCODE && mProximitySensor != null) {
                 mEventHandler.sendMessageDelayed(msg, 200);
                 processEvent(event);
             } else {
